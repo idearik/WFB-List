@@ -8,8 +8,14 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Load Google Sheets API credentials
-const credentials = JSON.parse(fs.readFileSync(path.join(__dirname, '../credentials.json'), 'utf8'));
+let credentials;
+try {
+  credentials = JSON.parse(fs.readFileSync(path.join(__dirname, '../credentials.json'), 'utf8'));
+} catch (error) {
+  console.error('Error reading credentials file:', error);
+  process.exit(1);
+}
+
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ['https://www.googleapis.com/auth/spreadsheets']
@@ -55,6 +61,7 @@ app.get('/', async (req, res) => {
 
     res.render('index', { cafes });
   } catch (error) {
+    console.error('Error loading data from Google Sheets:', error);
     res.status(500).send('Error loading data from Google Sheets');
   }
 });
@@ -98,12 +105,10 @@ app.post('/vote', async (req, res) => {
       res.status(404).json({ message: 'Cafe not found.' });
     }
   } catch (error) {
+    console.error('Error recording vote:', error);
     res.status(500).json({ message: 'Error recording vote' });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
-
+// Export the app for Vercel to use
 module.exports = app;

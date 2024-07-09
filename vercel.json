@@ -5,7 +5,9 @@
       { "src": "public/**/*", "use": "@vercel/static" }
     ],
     "routes": [
-      { "src": "/", "dest": "/api/index.js" }
+      { "src": "/", "dest": "/api/index.js" },
+      { "src": "/vote", "dest": "/api/index.js" },
+      { "handle": "filesystem" }
     ]
   }
   
