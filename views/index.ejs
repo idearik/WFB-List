@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WFBali - Cafes</title>
+  <title>Work-Friendly Cafes in Bali</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Work-from-Cafe Friendly Places in Bali</h1>
-  </header>
-  <main>
+  <h1>Work-Friendly Cafes in Bali</h1>
+  <div id="cafes">
     <% cafes.forEach(cafe => { %>
       <div class="cafe-card" data-cafe-name="<%= cafe.name %>">
         <h2><%= cafe.name %></h2>
@@ -21,8 +19,8 @@
         <p>Votes: <span class="vote-count"><%= cafe.votes %></span></p>
         <button class="vote-button">👍 Vote</button>
       </div>
-    <% }); %>
-  </main>
+    <% }) %>
+  </div>
   <script src="/scripts.js"></script>
 </body>
 </html>

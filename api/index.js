@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 3000;
 
 let credentials;
 try {
-  credentials = JSON.parse(fs.readFileSync(path.join(__dirname, '../credentials.json'), 'utf8'));
+  const credentialsPath = process.env.VERCEL ? path.join(__dirname, 'credentials.json') : path.join(__dirname, '../credentials.json');
+  credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
 } catch (error) {
   console.error('Error reading credentials file:', error);
   process.exit(1);
@@ -112,3 +113,9 @@ app.post('/vote', async (req, res) => {
 
 // Export the app for Vercel to use
 module.exports = app;
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
