@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 let credentials;
 try {
-  const credentialsPath = process.env.VERCEL ? path.join(__dirname, 'credentials.json') : path.join(__dirname, '../credentials.json');
+  const credentialsPath = process.env.VERCEL ? path.join(__dirname, '../credentials.json') : path.join(__dirname, 'credentials.json');
   credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
 } catch (error) {
   console.error('Error reading credentials file:', error);
